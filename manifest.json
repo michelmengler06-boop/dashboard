@@ -1,0 +1,15 @@
+{
+  "name": "Life OS Pro",
+  "short_name": "Life OS",
+  "description": "Dashboard personale per task, allenamenti, nutrizione, recovery e progressi.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070A12",
+  "theme_color": "#070A12",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
