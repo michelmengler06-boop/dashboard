@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="it-CH">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <title>Life OS Plus</title>
+  <meta name="application-name" content="Life OS Plus" />
+  <meta name="description" content="Dashboard lifestyle per iPhone: studio, pasti, allenamenti, salute, abitudini, budget e agenda." />
+  <meta name="theme-color" content="#080B16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Life OS" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="app-logo">M</div>
+        <div>
+          <h1>Life OS</h1>
+          <p id="dateLine">Dashboard personale</p>
+        </div>
+      </div>
+      <button class="ghost action" id="exportBtn" aria-label="Esporta dati">↥</button>
+    </header>
+
+    <section class="page active" data-page="home">
+      <article class="card hero-card">
+        <div class="hero-bg"></div>
+        <div class="card-head">
+          <span class="chip" id="weatherChip">Lugano · meteo —</span>
+          <span class="chip accent" id="rankChip">Rank E</span>
+        </div>
+        <div class="hero-main">
+          <div class="avatar">M</div>
+          <div>
+            <p class="eyebrow" id="dayLabel">Oggi</p>
+            <h2 id="hello">Ciao, Michel</h2>
+            <p class="sub" id="subtitle">Una dashboard per tenere tutto sotto controllo.</p>
+          </div>
+        </div>
+        <div class="bars">
+          <div class="metric-bar"><span>XP</span><div class="track"><div class="fill" id="xpFill"></div></div><b id="xpVal">0/100</b></div>
+          <div class="metric-bar"><span>ENERGIA</span><div class="track"><div class="fill energy" id="energyFill"></div></div><b id="energyVal">—</b></div>
+          <div class="metric-bar"><span>FOCUS</span><div class="track"><div class="fill focus" id="focusFill"></div></div><b id="focusVal">—</b></div>
+        </div>
+        <div class="quick-grid" id="quickStats"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Daily quest</h3><span class="pill" id="questCounter">0/0</span></div>
+        <div class="quest-list" id="quests"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Insight di oggi</h3><button class="link-btn" id="newInsight">Rigenera</button></div>
+        <p class="insight" id="insightText"></p>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Nota veloce</h3><span class="pill" id="notesPill">0</span></div>
+        <textarea id="noteText" rows="3" placeholder="Idea, obiettivo, pensiero…"></textarea>
+        <div class="split"><button class="btn primary" id="addNote">Salva nota</button><button class="btn" id="dailyReview">Review giornata</button></div>
+        <div class="list compact" id="notes"></div>
+      </article>
+    </section>
+
+    <section class="page" data-page="study">
+      <article class="card">
+        <div class="card-head"><h3>Studio · Kanban</h3><span class="pill" id="taskPill">0 compiti</span></div>
+        <div class="form-stack">
+          <input id="taskTitle" placeholder="Nuovo compito" />
+          <div class="triple"><select id="taskSubject"></select><select id="taskPrio"><option value="bassa">Bassa</option><option value="media" selected>Media</option><option value="alta">Alta</option></select><input type="date" id="taskDue" /></div>
+          <button class="btn primary" id="addTask">Aggiungi</button>
+        </div>
+        <div class="kanban" id="kanban"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Deep work</h3><span class="pill" id="pomoPill">0 oggi</span></div>
+        <div class="ring">
+          <svg viewBox="0 0 140 140"><circle class="ring-bg" cx="70" cy="70" r="61"/><circle class="ring-fg" id="pomoFg" cx="70" cy="70" r="61" stroke-dasharray="383.27"/></svg>
+          <div class="timer"><b id="pomoTime">25:00</b><span id="pomoMode">Focus</span></div>
+        </div>
+        <div class="seg" id="pomoPreset"><button class="on" data-min="25">25</button><button data-min="50">50</button><button data-min="90">90</button></div>
+        <div class="split"><button class="btn primary" id="pomoStart">Start</button><button class="btn" id="pomoReset">Reset</button></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Voti CH</h3><span class="pill" id="meanPill">media —</span></div>
+        <div id="grades"></div>
+        <div class="triple"><select id="gradeSubject"></select><select id="gradeValue"></select><button class="btn primary" id="addGrade">+</button></div>
+      </article>
+    </section>
+
+    <section class="page" data-page="habits">
+      <article class="card">
+        <div class="card-head"><h3>Abitudini</h3><span class="pill" id="habitPill">0%</span></div>
+        <div class="list" id="habitsList"></div>
+        <div class="split"><input id="habitName" placeholder="Nuova abitudine" /><button class="btn primary" id="addHabit">Aggiungi</button></div>
+      </article>
+      <article class="card"><div class="card-head"><h3>Heatmap 35 giorni</h3><span class="pill">consistenza</span></div><div id="heatmap" class="heatmap"></div></article>
+    </section>
+
+    <section class="page" data-page="health">
+      <article class="card">
+        <div class="card-head"><h3>Wellness</h3><span class="pill" id="healthScore">score —</span></div>
+        <label class="label">Acqua</label><div class="water" id="water"></div>
+        <div class="split"><label>Sonno <input id="sleep" type="number" min="0" max="14" step="0.5" placeholder="ore" /></label><label>Passi <input id="steps" type="number" min="0" step="500" placeholder="passi" /></label></div>
+        <label class="label">Mood</label><div class="mood" id="mood"><button data-mood="1">😵</button><button data-mood="2">😕</button><button data-mood="3">😐</button><button data-mood="4">🙂</button><button data-mood="5">🔥</button></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Diario pasti</h3><span class="pill" id="mealPill">0 kcal</span></div>
+        <div class="form-stack meal-form">
+          <input id="mealName" placeholder="Cosa hai mangiato? Es. pasta al pomodoro" />
+          <div class="triple"><select id="mealType"><option>Colazione</option><option>Pranzo</option><option>Cena</option><option>Snack</option></select><input id="mealCalories" type="number" min="0" placeholder="kcal" /><input id="mealProtein" type="number" min="0" placeholder="proteine g" /></div>
+          <textarea id="mealNotes" rows="2" placeholder="Note: quantità, qualità, come ti sei sentito…"></textarea>
+          <button class="btn primary" id="addMeal">Salva pasto</button>
+        </div>
+        <div class="macro-row"><div><b id="calToday">0</b><span>kcal</span></div><div><b id="proteinToday">0g</b><span>proteine</span></div><div><b id="mealsToday">0</b><span>pasti</span></div></div>
+        <div class="list" id="mealsList"></div>
+      </article>
+    </section>
+
+    <section class="page" data-page="fitness">
+      <article class="card">
+        <div class="card-head"><h3>Allenamento</h3><span class="pill" id="workoutNamePill">Sessione</span></div>
+        <input id="workoutName" placeholder="Nome allenamento, es. Push A / Petto e tricipiti" />
+        <div class="seg" id="workoutTabs"><button class="on" data-day="Push">Push</button><button data-day="Pull">Pull</button><button data-day="Legs">Legs</button><button data-day="Custom">Custom</button></div>
+        <div id="exercises"></div>
+        <div class="triple"><input id="exerciseName" placeholder="Esercizio" /><button class="btn" id="addExercise">Aggiungi</button><button class="btn" id="saveTemplate">Template</button></div>
+        <button class="btn primary wide" id="finishWorkout">Salva allenamento completato</button>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><h3>Storico allenamenti</h3><span class="pill" id="sessionPill">0</span></div>
+        <div class="list" id="workoutHistory"></div>
+      </article>
+    </section>
+
+    <section class="page" data-page="money">
+      <article class="card">
+        <div class="card-head"><h3>Budget mensile</h3><span class="pill" id="budgetPill">CHF 0</span></div>
+        <div class="triple"><input id="expenseName" placeholder="Spesa" /><input id="expenseAmount" type="number" step="0.05" placeholder="CHF" /><button class="btn primary" id="addExpense">+</button></div>
+        <div class="budget-chart" id="budgetChart"></div>
+        <div class="list" id="expenses"></div>
+      </article>
+      <article class="card"><div class="card-head"><h3>Obiettivo risparmio</h3><span class="pill" id="savingPill">0%</span></div><div class="split"><input id="savingGoal" type="number" placeholder="obiettivo CHF" /><input id="savingNow" type="number" placeholder="attuale CHF" /></div><div class="track large"><div class="fill" id="savingFill"></div></div></article>
+    </section>
+
+    <section class="page" data-page="calendar">
+      <article class="card">
+        <div class="card-head"><h3>Agenda</h3><span class="pill" id="eventPill">0</span></div>
+        <div class="triple"><input id="eventTitle" placeholder="Evento" /><input type="datetime-local" id="eventWhen" /><button class="btn primary" id="addEvent">+</button></div>
+        <div class="list" id="events"></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Obiettivi</h3><span class="pill" id="goalPill">0</span></div>
+        <div class="split"><input id="goalText" placeholder="Nuovo obiettivo" /><button class="btn primary" id="addGoal">Aggiungi</button></div>
+        <div class="list" id="goals"></div>
+      </article>
+      <article class="card"><div class="card-head"><h3>Sistema</h3><span class="pill">backup</span></div><div class="split"><button class="btn" id="importBtn">Import JSON</button><button class="btn danger" id="resetBtn">Reset</button></div><input type="file" id="importFile" accept="application/json" hidden /></article>
+    </section>
+  </main>
+
+  <nav class="nav" id="nav" aria-label="Navigazione">
+    <button class="tab on" data-page="home"><span>⌂</span><small>Hub</small></button>
+    <button class="tab" data-page="study"><span>◫</span><small>Studio</small></button>
+    <button class="tab" data-page="habits"><span>◆</span><small>Habit</small></button>
+    <button class="tab" data-page="health"><span>✚</span><small>Food</small></button>
+    <button class="tab" data-page="fitness"><span>▣</span><small>Gym</small></button>
+    <button class="tab" data-page="money"><span>₣</span><small>Soldi</small></button>
+    <button class="tab" data-page="calendar"><span>◷</span><small>Altro</small></button>
+  </nav>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
